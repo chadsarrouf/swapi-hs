@@ -1,20 +1,34 @@
+
+
 .App {
   text-align: center;
-}
+  background-color: black;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+  @media (prefers-reduced-motion: no-preference) {
+    .ship {
+      animation: App-logo-spin infinite 2s linear;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    }
+  }
+
+  .ship {
+    width: 5px;
+    height: 20px;
+    pointer-events: none;
+    position: fixed;
+    top: 46%;
+    left: 46%;
   }
 }
 
+.header {
+}
+
+
+
+
+
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
