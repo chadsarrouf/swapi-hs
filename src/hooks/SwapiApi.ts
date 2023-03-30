@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import Pilots from '../types/Pilots';
-import Starships from '../types/Starships';
+import Pilot from '../types/Pilot';
+import Starship from '../types/Starship';
 
 interface FetchDataResult {
-  starships: Starships[];
-  pilots: Pilots[];
+  starships: Starship[];
+  pilots: Pilot[];
   loading: boolean;
   error: string | null;
 }
@@ -14,8 +14,8 @@ const useFetchSwapiData = (): FetchDataResult => {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<Record<string, any>>({});
 
-  const [starships, setStarships] = useState<Starships[]>([]);
-  const [pilots, setPilots] = useState<Pilots[]>([]);
+  const [starships, setStarships] = useState<Starship[]>([]);
+  const [pilots, setPilots] = useState<Pilot[]>([]);
 
   useEffect(() => {
     fetchStarshipsData();

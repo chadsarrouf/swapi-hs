@@ -1,4 +1,4 @@
-export default interface Starships {
+export default interface Starship {
   MGLT: string;
   cargo_capacity: string;
   consumables: string;
