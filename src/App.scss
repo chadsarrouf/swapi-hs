@@ -51,19 +51,21 @@ $sw-yellow: #FFE81F;
       font-family: 'SF Distant Galaxy', sans-serif;
       margin: 0 20px;
     }
-
-    h1:not(.active):hover {
-      color: yellow;
-    }
-    
-    
-    h1:not(.active):hover {
-      color: yellow;
-    }
     
 
-    .pilots {
+
+    
+    h1:not(.active) {
       color: gray;
+    }
+
+    h1:hover {
+      color: $sw-yellow;
+      filter: brightness(0.55) saturate(1.2) contrast(0.85) blur(0.2px);
+    }
+
+    h1.active {
+      color: $sw-yellow !important;
     }
   }
 
