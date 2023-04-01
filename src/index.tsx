@@ -9,20 +9,28 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Starship from './components/Starship';
+import Home from './components/Home';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "starships/:starshipId",
-    element: <App />,
-  },
-  {
-    path: "pilots/:pilotId",
-    element: <App />,
+    children: [
+      {
+        path: "starships",
+        element: <Home />,
+      },
+      {
+        path: "starship/:starshipId",
+        element: <Starship />,
+      },
+      {
+        path: "pilot/:pilotsId",
+        element: <Starship />,
+      },
+    ],
   },
 ]);
 
@@ -34,7 +42,6 @@ root.render(
   <React.StrictMode>
     <DataProvider>
       <RouterProvider router={router} />
-      {/* <App /> */}
     </DataProvider>
   </React.StrictMode>
 );

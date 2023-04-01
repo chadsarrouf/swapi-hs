@@ -1,9 +1,15 @@
+import { Link } from "react-router-dom";
+
 type Props = {
   header: string;
-  imageUrl: string;
+  resourceId: string;
+  resource: string;
 };
 
-const Card = ({ header, imageUrl }: Props) => {
+const Card = ({ header, resource, resourceId }: Props) => {
+  const imageUrl = `/${resource}/${resourceId}.jpg`;
+  
+  console.log(imageUrl, 'imageUrl');
   const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.currentTarget.parentElement?.classList.add("hovering-card");
   };
@@ -13,9 +19,9 @@ const Card = ({ header, imageUrl }: Props) => {
   };
 
   return (
-    <a 
+    <Link
       className="card" 
-      href="#"
+      to={`${resource}/${resourceId}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       >
@@ -28,7 +34,7 @@ const Card = ({ header, imageUrl }: Props) => {
         <p className="see-details"> see details → </p>
         <h3 className="card-heading">{header}</h3>
       </div>
-    </a>
+    </Link>
   );
 };
 

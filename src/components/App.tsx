@@ -1,11 +1,15 @@
 import React, { useState, useContext, useEffect, useMemo } from 'react';
 import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
-import useFetchSwapiData from '../hooks/SwapiApi';
+import { useFetchSwapiData } from '../hooks/SwapiApi';
 import logo from '../assets/logo.png';
 import ship from '../assets/ship.png';
+import Home from './Home';
 import Card from './Card';
 import CardContainer from './CardContainer';
+import Header from './Header';
+import { Routes, Route } from 'react-router-dom';
+import Starship from './Starship';
 
 const App = () => {
   const [displayedEntity, setDisplayedEntity] = useState<'pilots' | 'starships'>('starships');
@@ -26,36 +30,19 @@ const App = () => {
     setDisplayedEntity(selectedEntity);
   };
 
-  return (
+  return (  
     <div className="App">
       <img src={ship} className="ship"  alt="loader" />
     
-      <header className="header">
-        <img src={logo} className="logo"  alt="logo" />
-      </header> 
-
-      
+      <Header/>
 
       <section className="content">
 
-        <div className="tab-container flex flex-row justify-evenly flex-wrap">
-          <h1 
-            data-value="starships" 
-            onClick={handleEntityChange} 
-            className={ displayedEntity == 'starships' ? ' active' : ''}
-          > 
-            Starships
-          </h1> 
-          <h1 
-            data-value="pilots" 
-            onClick={handleEntityChange} 
-            className={ displayedEntity == 'pilots' ? ' active' : ''}
-          > 
-            Pilots
-          </h1> 
-        </div>
-
-        <CardContainer cardData={cardData} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="starship/:starshipId" element={<Starship />} />
+          <Route path="pilot/:pilotId" element={<Starship />} />
+        </Routes>
 
       </section>
     </div>
