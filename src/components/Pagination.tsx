@@ -10,7 +10,6 @@ const Pagination = ({ count, page, setPage }: Props) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const currentParams = searchParams.toString(); 
   const cardsPerPage = 20;
 
   const numberOfPages = Math.ceil(count/cardsPerPage);
@@ -19,7 +18,7 @@ const Pagination = ({ count, page, setPage }: Props) => {
     let content = [];
     for (let i = 1 ; i < numberOfPages + 1; i++) {
       const newSearchParams = new URLSearchParams(searchParams);
-      const classes = page == i ? 'active' : '';
+      const classes = page === i ? 'active' : '';
       newSearchParams.set("page", i.toString());
       const handleClick = () => {
         setSearchParams(newSearchParams);
@@ -31,7 +30,7 @@ const Pagination = ({ count, page, setPage }: Props) => {
     return content;
   };
 
-  const classes  = `pagination noselect ${count == 0 ? 'empty' : ''} `
+  const classes  = `pagination noselect ${count === 0 ? 'empty' : ''} `
 
   const handleArrowClick = (value: 1 | -1) => {
     const newSearchParams = new URLSearchParams(searchParams);

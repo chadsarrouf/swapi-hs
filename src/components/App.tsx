@@ -1,14 +1,11 @@
-import React, { useState, useContext, useEffect, useMemo, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
 import Dashboard from './Dashboard';
-import Card from './Card';
-import CardContainer from './CardContainer';
 import Header from './Header';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Starship from './Starship';
 import Pilot from './Pilot';
-import Loader from './Loader';
 import { useFetchAllData } from '../hooks/SwapiApi';
 
 const App = () => {
@@ -16,7 +13,7 @@ const App = () => {
 
   <audio ref={audioRef} src="/starwars.mp3" loop autoPlay />        
 
-  const { starships, pilots, loading, error, starshipsCount, pilotsCount } = useFetchAllData();
+  const { starships, pilots, loading, } = useFetchAllData();
   const {setPilots, setStarships, setLoading} = useContext(DataContext);
 
 
@@ -24,7 +21,7 @@ const App = () => {
     setStarships(starships);
     setPilots(pilots);
     setLoading(loading);
-  }, [starships, setStarships, pilots, setPilots, setLoading]);
+  }, [starships, setStarships, pilots, setPilots, loading, setLoading]);
 
   return (  
     <div className="App">    

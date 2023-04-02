@@ -20,7 +20,7 @@ const CardContainer = () => {
 
   return (
     <header className="header">
-      <audio ref={audioRef} src="/starwars.mp3" loop autoPlay />        
+      <audio ref={audioRef} src="/starwars.mp3" autoPlay />        
       <img  onClick={() => {navigate('/'); navigate(0)}} src={logo} className="logo"  alt="logo" />
       <div className="buttons">
         <img onClick={() => {navigate('/'); navigate(0)}} className={'refresh'} src={refresh} alt=""/>

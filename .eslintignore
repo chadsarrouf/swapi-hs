@@ -1,0 +1,8 @@
+node_modules/
+build/
+dist/
+*.min.js
+*.config.js
+public/
+static/
+src/scripts

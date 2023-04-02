@@ -28,8 +28,6 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   const [starships, setStarships] = useState<Starship[]>([]);
   const [pilots, setPilots] = useState<Pilot[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [pilotsCount, setPilotsCount] = useState<number>(0);
-  const [starshipsCount, setStarshipsCount] = useState<number>(0);
 
   return (
     <DataContext.Provider value={{ starships, setStarships, pilots, setPilots, loading, setLoading }}>

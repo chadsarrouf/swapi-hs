@@ -4,8 +4,7 @@ import { DataContext } from '../contexts/DataContext';
 import Loader from './Loader';
 import CardContainer from './CardContainer';
 import Pagination from './Pagination';
-import { useNavigate, useSearchParams  } from "react-router-dom";
-import Pilot from '../types/Pilot';
+import { useSearchParams  } from "react-router-dom";
 
 const Dashboard = () => {
   const [activeResource, setActiveResource] = useState<'pilots' | 'starships'>('pilots');
@@ -13,15 +12,13 @@ const Dashboard = () => {
 
   const { pilots, starships, loading } = useContext(DataContext);
   
-  const navigate = useNavigate();
-
   
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
   const type = searchParams?.get("type");
     
-    if (type == "pilots" || type == "starships") {
+    if (type === "pilots" || type === "starships") {
       setActiveResource(type as 'pilots' | 'starships');
     } 
 
@@ -60,14 +57,14 @@ const Dashboard = () => {
         <h1 
           data-value="pilots" 
           onClick={handleEntityChange} 
-          className={ activeResource == 'pilots' ? ' active' : ''}
+          className={ activeResource === 'pilots' ? ' active' : ''}
         > 
           Pilots
         </h1> 
         <h1 
           data-value="starships" 
           onClick={handleEntityChange} 
-          className={ activeResource == 'starships' ? ' active' : ''}
+          className={ activeResource === 'starships' ? ' active' : ''}
         > 
           Starships
         </h1> 
@@ -75,7 +72,7 @@ const Dashboard = () => {
       { !loading && 
         <>
           <CardContainer resource={activeResource} cardData={cardData} />
-          <Pagination count={activeResource == 'starships' ? starships.length : pilots.length} page={page} setPage={setPage} />
+          <Pagination count={activeResource === 'starships' ? starships.length : pilots.length} page={page} setPage={setPage} />
         </>
       }
     </div>

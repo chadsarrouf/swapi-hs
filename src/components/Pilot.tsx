@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useParams, Link } from "react-router-dom";
 import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
@@ -25,17 +25,17 @@ const Pilot = ( { pilotsInMemory } : Props)  => {
       const match =  pilot.url.match(regex); // returns an array containing the match or null
       const id = match?.[0]?.toString();
       
-      return id == pilotId;
+      return id === pilotId;
     })
     setPilot(pilot);
-  }, [pilots]);
+  }, [pilots, pilotId]);
 
   
   useEffect(() => {
     if(!pilotsInMemory) {
       setPilot(resource as PilotType);
     }
-  }, [resource]);
+  }, [resource, pilotsInMemory]);
 
   return (
     <div className="pilot flex ">
@@ -80,7 +80,7 @@ const Pilot = ( { pilotsInMemory } : Props)  => {
                       const id = match?.[0]?.toString();
                       
                       const starshipName = starships.filter(starship => {
-                        return starship.url == starshipUrl;
+                        return starship.url === starshipUrl;
                       })[0]?.name;
 
                       return (

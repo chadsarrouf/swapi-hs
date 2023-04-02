@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useParams, Link} from "react-router-dom";
 import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
@@ -15,7 +15,7 @@ const Starship = ({starshipsInMemory} : Props) => {
   let { starshipId } = useParams(); 
   const [starship, setStarship] = useState<StarshipType>();
   const imageUrl = `/starships/${starshipId}.jpg`;
-  const { resource, error, loading: resourceLoading} = useFetchResource("starships", starshipId ?? "0", starshipsInMemory);
+  const { resource, loading: resourceLoading} = useFetchResource("starships", starshipId ?? "0", starshipsInMemory);
   
   const { starships, pilots, loading} = useContext(DataContext);
   
@@ -25,10 +25,10 @@ const Starship = ({starshipsInMemory} : Props) => {
       const match =  starship.url.match(regex); // returns an array containing the match or null
       const id = match?.[0]?.toString();
       
-      return id == starshipId;
+      return id === starshipId;
     })
     setStarship(starship);
-  }, [pilots]);
+  }, [ starshipId, starships]);
 
   
 
@@ -36,7 +36,7 @@ const Starship = ({starshipsInMemory} : Props) => {
     if(!starshipsInMemory) {
       setStarship(resource as StarshipType);
     }
-  }, [resource]);
+  }, [resource, starshipsInMemory]);
 
 
 
@@ -99,7 +99,7 @@ const Starship = ({starshipsInMemory} : Props) => {
                     const id = match?.[0]?.toString();
                     
                     const pilotName = pilots.filter(pilot => {
-                      return pilot.url == pilotUrl;
+                      return pilot.url === pilotUrl;
                     })[0]?.name;
 
 

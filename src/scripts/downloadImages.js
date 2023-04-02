@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Set up the input query and API key
-const query = "";
+// const query = "";
 const apiKey = 'AIzaSyCrOu5AFBeNnWtxvCc9wnP8V0fhM8RgsCM'; // DELETE ME
 const cx = 'e43c8824bbf994c00'; // DELETE ME
 
@@ -63,7 +63,7 @@ const getPilots = async () => {
 
 const getImages = async () => {
   // const resources = await getStarships();
-  const resources = await getPilots();
+  const resources = await getPilots(); 
   resources.forEach((resource) => {
     const url = resource.url;
     const regex = /\d+(?=\/$)/; // match one or more digits at the end of the string
