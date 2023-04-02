@@ -7,6 +7,8 @@ interface DataContextState {
   starships: Starship[];
   setPilots: (pilots: Pilot[]) => void;
   setStarships: (starships: Starship[]) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }
 
 const DataContext = createContext<DataContextState>({
@@ -14,6 +16,8 @@ const DataContext = createContext<DataContextState>({
   starships: [],
   setPilots: () => {},
   setStarships: () => {},
+  loading: true,
+  setLoading: () => {},
 });
 
 interface DataProviderProps {
@@ -23,9 +27,12 @@ interface DataProviderProps {
 const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   const [starships, setStarships] = useState<Starship[]>([]);
   const [pilots, setPilots] = useState<Pilot[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [pilotsCount, setPilotsCount] = useState<number>(0);
+  const [starshipsCount, setStarshipsCount] = useState<number>(0);
 
   return (
-    <DataContext.Provider value={{ starships, setStarships, pilots, setPilots }}>
+    <DataContext.Provider value={{ starships, setStarships, pilots, setPilots, loading, setLoading }}>
       {children}
     </DataContext.Provider>
   );

@@ -17,6 +17,91 @@ interface fetchResourceResult {
   error: string | null;
 }
 
+const useFetchAllData = (): FetchDataResult => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<Record<string, any>>({});
+
+  const [starships, setStarships] = useState<Starship[]>([]);
+  const [starshipsCount, setStarshipsCount] = useState<number>(0);
+  const [pilots, setPilots] = useState<Pilot[]>([]);
+  const [pilotsCount, setPilotsCount] = useState<number>(0);
+
+  useEffect(() => {
+      console.log('begin fetching all!');    
+      fetchStarshipsData();
+      fetchPilotsData();
+  }, []);
+
+  const fetchStarshipsData = async () => {
+    try {       
+      let startshipData: Starship[] = [];
+      let nextPage = `https://swapi.dev/api/starships/?page=1`;
+      setLoading(true);
+      while (nextPage) {
+        const response = await fetch(nextPage);
+
+        if (!response.ok) throw new Error('Error fetching data');
+
+        const { count, next, results } = await response.json();
+    
+        startshipData = [...startshipData, ...results];
+        
+        nextPage = next;
+
+        if (starshipsCount == 0) {
+          setStarshipsCount(count);
+        }
+
+      } 
+      setStarships(startshipData);
+      setLoading(false);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
+      setLoading(false);
+    }
+  };
+
+  const fetchPilotsData = async () => {
+    try {
+      let pilotData: Pilot[] = [];
+      // in a larger project, we would add url values to .env file
+      let nextPage = `https://swapi.dev/api/people/?page=1`;
+      setLoading(true);
+      while (nextPage) {
+        const response = await fetch(nextPage);
+
+        if (!response.ok) throw new Error('Error fetching data');
+
+        const { count, next, results } = await response.json();
+    
+        pilotData = [...pilotData, ...results];
+        nextPage = next;
+
+        if (pilotsCount == 0) {
+          setPilotsCount(count);
+        }
+      } 
+      setPilots(pilotData);
+      setLoading(false);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
+      setLoading(false);
+    }
+  };
+
+  return { starships, pilots, loading, error, starshipsCount, pilotsCount };
+};
+
+
 const useFetchSwapiData = (nextPageNumber: number): FetchDataResult => {
   console.log('begin fetching all!');
   const [loading, setLoading] = useState<boolean>(true);
@@ -44,6 +129,8 @@ const useFetchSwapiData = (nextPageNumber: number): FetchDataResult => {
       const convertedNumber = nextPageNumber*2 -1 ;
       // in a larger project, we would add url values to .env file
       let nextPage = `https://swapi.dev/api/starships/?page=${convertedNumber}`;
+      
+      setLoading(true);
       
       while (nextPage && index <= 2) {
         const response = await fetch(nextPage);
@@ -86,10 +173,8 @@ const useFetchSwapiData = (nextPageNumber: number): FetchDataResult => {
       const convertedNumber = nextPageNumber*2 -1 ;
       // in a larger project, we would add url values to .env file
       let nextPage = `https://swapi.dev/api/people/?page=${convertedNumber}`;
-      
+      setLoading(true);
       while (nextPage && index <= 2) {
-
-        
         const response = await fetch(nextPage);
 
         if (!response.ok) throw new Error('Error fetching data');
@@ -120,12 +205,13 @@ const useFetchSwapiData = (nextPageNumber: number): FetchDataResult => {
   return { starships, pilots, loading, error, starshipsCount, pilotsCount };
 };
 
-const useFetchResource = (type: "starships" | "pilots", resourceId: string): fetchResourceResult => {
+const useFetchResource = (type: "starships" | "pilots", resourceId: string, abortCall: boolean): fetchResourceResult => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [resource, setResource] = useState<Starship | Pilot>();
   
   useEffect(() => {
+    if (abortCall) return;
     fetchResource(type, resourceId);
   }, []);
 
@@ -159,4 +245,4 @@ const useFetchResource = (type: "starships" | "pilots", resourceId: string): fet
 };
 
 
-export {useFetchSwapiData, useFetchResource} ;
+export { useFetchSwapiData, useFetchResource, useFetchAllData } ;

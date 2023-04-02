@@ -20,20 +20,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "starships/",
-        element: <Dashboard />,
-      },
-      {
-        path: "pilots/",
-        element: <Dashboard />,
-      },
-      {
         path: "starship/:starshipId",
-        element: <Starship />,
       },
       {
         path: "pilot/:pilotsId",
-        element: <Starship />,
       },
     ],
   },

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useParams, useNavigate, Link} from "react-router-dom";
+import { useParams, Link} from "react-router-dom";
 import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
 import { useFetchResource } from '../hooks/SwapiApi';
@@ -7,21 +7,45 @@ import back from '../assets/back.png';
 import StarshipType from '../types/Starship';
 import Loader from './Loader';
 
-const Starship = () => {
-  let { starshipId } = useParams();
+type Props = {
+  starshipsInMemory: boolean;
+};
+
+const Starship = ({starshipsInMemory} : Props) => {
+  let { starshipId } = useParams(); 
   const [starship, setStarship] = useState<StarshipType>();
   const imageUrl = `/starships/${starshipId}.jpg`;
-  const navigate = useNavigate();
-  const { resource, loading, error } = useFetchResource("starships", starshipId ?? "0");
+  const { resource, error, loading: resourceLoading} = useFetchResource("starships", starshipId ?? "0", starshipsInMemory);
+  
+  const { starships, pilots, loading} = useContext(DataContext);
   
   useEffect(() => {
-    setStarship(resource as StarshipType);
+    const starship = starships.find(starship => {
+      const regex = /\d+(?=\/$)/; // match one or more digits at the end of the string (the id)
+      const match =  starship.url.match(regex); // returns an array containing the match or null
+      const id = match?.[0]?.toString();
+      
+      return id == starshipId;
+    })
+    setStarship(starship);
+  }, [pilots]);
+
+  
+
+  useEffect(() => {
+    if(!starshipsInMemory) {
+      setStarship(resource as StarshipType);
+    }
   }, [resource]);
+
+
 
   return (
     <div className="starship flex ">
       <Loader loading={loading}/>
-      <img onClick={() => {navigate(-1);}}  src={back} className='back'  alt="back" />
+      <Link to={-1 as any}>
+        <img src={back} className='back'  alt="back" />
+      </Link>
       { (starship?.name && !loading) ? 
         <div className="details">
           <img src={imageUrl} className="image"  alt="portrait" />
@@ -68,34 +92,39 @@ const Starship = () => {
             <div> 
               <span><label>Pilots </label></span> 
               <p>
-                { starship.pilots &&
-                  starship.pilots.map((pilot, index)=>{
-                    const regex = /\d+(?=\/$)/; // match one or more digits at the end of the string
-                    const match =  pilot.match(regex); // returns an array containing the match or null
+                { (starship.pilots && pilots.length) ?
+                  starship.pilots.map((pilotUrl, index)=>{
+                    const regex = /\d+(?=\/$)/; // match one or more digits at the end of the string (the id)
+                    const match =  pilotUrl.match(regex); // returns an array containing the match or null
                     const id = match?.[0]?.toString();
+                    
+                    const pilotName = pilots.filter(pilot => {
+                      return pilot.url == pilotUrl;
+                    })[0]?.name;
 
+
+                    console.log(pilotName);
+                    
                     return (
                       <li key={index}>
                         <Link
                           className="card" 
                           to={`/pilot/${id}`}
                         >
-                        {`Pilot/${id} →`}
+                        {`${pilotName} →`}
                         </Link>
                       </li>
                     );
-
-                    })
+                  })
+                    :
+                    "n/a"                    
                 }        
-                { !starship.pilots.length &&
-                  "n/a"
-                }             
               </p>
             </div>
           </div>
         </div>   
         :
-         (!loading &&
+         (!loading && !resourceLoading &&
           <div className="error">
             No data found for Starship #{starshipId}.
          </div>)     

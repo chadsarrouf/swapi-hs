@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
 import { useFetchResource } from '../hooks/SwapiApi';
@@ -7,21 +7,43 @@ import back from '../assets/back.png';
 import PilotType from '../types/Pilot';
 import Loader from './Loader';
 
-const Pilot = () => {
+type Props = {
+  pilotsInMemory: boolean;
+};
+
+const Pilot = ( { pilotsInMemory } : Props)  => {
   let { pilotId } = useParams();
   const [pilot, setPilot] = useState<PilotType>();
   const imageUrl = `/pilots/${pilotId}.jpg`;
-  const navigate = useNavigate();
-  const { resource, loading, error } = useFetchResource("pilots", pilotId ?? "0");
+  const { resource, loading: resourceLoading } = useFetchResource("pilots", pilotId ?? "0", !!pilotsInMemory);
+  
+  const { starships, pilots, loading} = useContext(DataContext);
+
+  useEffect(() => {
+    const pilot = pilots.find(pilot => {
+      const regex = /\d+(?=\/$)/; // match one or more digits at the end of the string (the id)
+      const match =  pilot.url.match(regex); // returns an array containing the match or null
+      const id = match?.[0]?.toString();
+      
+      return id == pilotId;
+    })
+    setPilot(pilot);
+  }, [pilots]);
+
   
   useEffect(() => {
-    setPilot(resource as PilotType);
+    if(!pilotsInMemory) {
+      setPilot(resource as PilotType);
+    }
   }, [resource]);
 
   return (
     <div className="pilot flex ">
       <Loader loading={loading}/>
-      <img onClick={() => {navigate(-1);}}  src={back} className='back'  alt="back" />
+      <Link to={-1 as any}>
+        <img src={back} className='back'  alt="back" />
+      </Link>
+
       { (pilot?.name && !loading) ? 
         <div className="details">
           <img src={imageUrl} className="image"  alt="portrait" />
@@ -51,37 +73,39 @@ const Pilot = () => {
             <div> 
               <span><label>Starships </label></span> 
               <p>
-                { pilot.starships &&
-                  pilot.starships.map((starship, index)=>{
-                    const regex = /\d+(?=\/$)/; // match one or more digits at the end of the string
-                    const match =  starship.match(regex); // returns an array containing the match or null
-                    const id = match?.[0]?.toString();
+                { (pilot.starships.length && starships.length) ?
+                    pilot.starships.map((starshipUrl, index)=>{
+                      const regex = /\d+(?=\/$)/; // match one or more digits at the end of the string (the id)
+                      const match =  starshipUrl.match(regex); // returns an array containing the match or null
+                      const id = match?.[0]?.toString();
+                      
+                      const starshipName = starships.filter(starship => {
+                        return starship.url == starshipUrl;
+                      })[0]?.name;
 
-                    return (
-                      <li key={index}>
-                        <Link
-                          className="card" 
-                          to={`/starship/${id}`}
-                        >
-                        {`Starship/${id} →`}
-                        </Link>
-                      </li>
-                    );
+                      return (
+                        <li key={index}>
+                          <Link
+                            className="card" 
+                            to={`/starship/${id}`}
+                          >
+                          {`${starshipName} →`}
+                          </Link>
+                        </li>
+                      );
 
-                    })
-                }        
-                { !pilot.starships.length &&
-                  "n/a"
-                }             
+                      })
+                      :
+                      "n/a"                    
+                }                 
               </p>
             </div>
           </div>
-        </div>   
-        :
-         (!loading &&
-          <div className="error">
-            No data found for Pilot #{pilotId}.
-         </div>)     
+        </div>           :
+        (!loading && !resourceLoading &&
+        <div className="error">
+          No data found for Pilot #{pilotId}.
+        </div>)     
       }
     </div>
   );

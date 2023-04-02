@@ -4,7 +4,6 @@ import { DataContext } from '../contexts/DataContext';
 import Loader from './Loader';
 import CardContainer from './CardContainer';
 import Pagination from './Pagination';
-import { useFetchSwapiData } from '../hooks/SwapiApi';
 import { useNavigate, useSearchParams  } from "react-router-dom";
 import Pilot from '../types/Pilot';
 
@@ -12,34 +11,36 @@ const Dashboard = () => {
   const [activeResource, setActiveResource] = useState<'pilots' | 'starships'>('pilots');
   const [page, setPage] = useState<number>(1);
 
-  // const { pilots, starships, setPilots, setStarships} = useContext(DataContext);
-  const { pilots, starships, setPilots, setStarships } = useContext(DataContext);
-
-  const { starships: starshipsData, pilots: pilotsData, loading, error, starshipsCount, pilotsCount } = useFetchSwapiData(page);
+  const { pilots, starships, loading } = useContext(DataContext);
+  
   const navigate = useNavigate();
+
   
   const [searchParams, setSearchParams] = useSearchParams();
-  const type = searchParams?.get("type");
 
   useEffect(() => {
+  const type = searchParams?.get("type");
+    
     if (type == "pilots" || type == "starships") {
       setActiveResource(type as 'pilots' | 'starships');
     } 
-  }, [searchParams]);
 
-  useEffect(() => {
-    setStarships(starshipsData);
-  }, [starshipsData, setStarships]);
-  
-  useEffect(() => {
-    setPilots(pilotsData);
-  }, [pilotsData, setPilots]);
-  
+  const page = searchParams?.get("page");
+
+  setPage(parseInt(page ?? "1"));
+  }, [searchParams]); 
+
 
   const cardData = useMemo(() => {
-    return activeResource === 'starships' ? starships : pilots;
-    
-  }, [activeResource, pilots, starships]);
+    // Calculate the starting and ending index for the current page
+    const startIndex = (page - 1) * 20;
+    const endIndex = page * 20;
+  
+    // Return the slice of the starships or pilots array based on the activeResource and page
+    return activeResource === 'starships'
+      ? starships.slice(startIndex, endIndex)
+      : pilots.slice(startIndex, endIndex);
+  }, [activeResource, pilots, starships, page]);
 
   const handleEntityChange = (event: React.MouseEvent<HTMLHeadingElement>) => {
     const activeResource = event.currentTarget.getAttribute('data-value') as 'pilots' | 'starships';
@@ -74,7 +75,7 @@ const Dashboard = () => {
       { !loading && 
         <>
           <CardContainer resource={activeResource} cardData={cardData} />
-          <Pagination count={activeResource == 'starships' ? starshipsCount : pilotsCount} page={page} setPage={setPage} />
+          <Pagination count={activeResource == 'starships' ? starships.length : pilots.length} page={page} setPage={setPage} />
         </>
       }
     </div>
