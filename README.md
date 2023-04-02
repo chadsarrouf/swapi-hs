@@ -1,7 +1,7 @@
 # Swapi App
 
-Made using ReactJs, Typescript, React Router, SCSS, and Lots of Love
+Made using **ReactJs**, **Typescript**, **React Router**, **SCSS**, and **Lots of Love**.
 
-Demo Link: https://swapi-hs.vercel.app/
+**Demo Link: https://swapi-hs.vercel.app/**
 
-(Pro Tip: give the site audio permission. click the icon left of your browser's url bar) 
+_(Pro Tip: **Give the site audio permissions**. Click the alert icon left of your browser's url bar.)_
