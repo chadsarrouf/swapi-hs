@@ -1,16 +1,17 @@
 import React, { useState, useContext, useEffect, useMemo } from 'react';
 import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
-import logo from '../assets/logo.png';
-import ship from '../assets/ship.png';
-import Card from './Card';
+import Loader from './Loader';
 import CardContainer from './CardContainer';
-import Header from './Header';
-import { Routes, Route } from 'react-router-dom';
+import { useFetchSwapiData } from '../hooks/SwapiApi';
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const [activeResource, setActiveResource] = useState<'pilots' | 'starships'>('starships');
-  const { pilots, starships, setPilots, setStarships} = useContext(DataContext);
+  // const { pilots, starships, setPilots, setStarships} = useContext(DataContext);
+  const { setPilots, setStarships } = useContext(DataContext);
+  const { starships, pilots, loading, error } = useFetchSwapiData();
+  const navigate = useNavigate();
   
   useEffect(() => {
     setPilots(pilots);
@@ -19,15 +20,19 @@ const App = () => {
 
   const cardData = useMemo(() => {
     return activeResource === 'starships' ? starships : pilots;
+    
   }, [activeResource, pilots, starships]);
 
   const handleEntityChange = (event: React.MouseEvent<HTMLHeadingElement>) => {
-    const selectedEntity = event.currentTarget.getAttribute('data-value') as 'pilots' | 'starships';
-    setActiveResource(selectedEntity);
+    const activeResource = event.currentTarget.getAttribute('data-value') as 'pilots' | 'starships';
+    navigate(`?type=${activeResource}`)
+    setActiveResource(activeResource);
   };
 
   return (
-    <>
+    <div className="dashboard">
+      <Loader loading={loading} />
+    
       <div className="tab-container flex flex-row justify-evenly flex-wrap">
         <h1 
           data-value="starships" 
@@ -46,7 +51,7 @@ const App = () => {
       </div>
 
       <CardContainer resource={activeResource} cardData={cardData} />
-    </>
+    </div>
   );
 }
 

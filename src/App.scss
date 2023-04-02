@@ -5,23 +5,38 @@
 $sw-yellow: #FFE81F;
 
 .App {
-  height: 100% !important;
+  height: 100vh;
+  overflow-y: scroll; /* Show scrollbar */    
   text-align: center;
   @media (prefers-reduced-motion: no-preference) {
-    .ship {
+    .loader {
       animation: App-logo-spin infinite 1.5s linear;
 
+    @keyframes App-logo-spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
     }
   }
 
-  .ship {
+  .loader {
     width: 50px;
     height: 50px;
     pointer-events: none;
     position: fixed;
     top: 46%;
-    left: 48%;
+    left: 50%;
+    display: none;
   }
+
+  .loader.loading {
+    display: block;
+  }
+
 }
 
 .header {
@@ -41,7 +56,11 @@ $sw-yellow: #FFE81F;
   width: 60%;
   margin: 0 auto;
   position: relative;
+
+}
   
+.dashboard {  
+
   .tab-container {
 
     h1 {
@@ -51,9 +70,6 @@ $sw-yellow: #FFE81F;
       font-family: 'SF Distant Galaxy', sans-serif;
       margin: 0 20px;
     }
-    
-
-
     
     h1:not(.active) {
       color: gray;
@@ -177,35 +193,85 @@ $sw-yellow: #FFE81F;
       opacity: 100;
     }
   }
-
 }
 
-
-
-
-
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.starship, .pilot {
+  position: relative;
   color: white;
+  padding: 6rem; 
+
+  .back {
+    cursor: pointer;
+    position: absolute;
+    top:  -10px;
+    left: -100px;
+    width: 60px;
+    transition: 
+      transform 50ms linear,
+  }
+
+  .back:hover {
+    transform: scale(1.1) translateZ(0);
+    filter: brightness(0.85) saturate(1.2) contrast(0.85) blur(0.2px);
+  }
+
+  .details {
+    position: relative;
+    width: 100%;
+    text-align: left;
+    line-height: 2.5rem;
+    .image {
+      border: 2px solid white;
+      border-radius: 20px 0 20px 20px;
+      width: 45%;
+      position: absolute;
+      top: 0;
+      right: -10rem;
+    }
+    .info {
+      border-top: 3px solid white;
+      border-left: 1px solid $sw-yellow;
+      border-radius: 10px 0px 0 0;
+      padding: 2rem;
+      width: 70%;
+
+      > div {
+        flex-basis: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        border-bottom: 1px solid gray;
+      }
+
+      span {
+        display: flex;
+        flex-basis: 50%;
+        justify-content: start;  
+
+        label {
+          font-weight: 800;
+          margin-right: 2rem;
+          text-align: left;          
+        }   
+      }
+
+
+
+      p {
+        flex-basis: 50%;
+      }
+
+    }
+  }
+  
+  .error {
+    width: 100%;
+    font-weight: 100;
+    padding: 1rem;
+    border-bottom: 1px solid gray;
+    text-align: center;
+  }
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 
 

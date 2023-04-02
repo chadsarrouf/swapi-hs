@@ -10,7 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Starship from './components/Starship';
-import Home from './components/Home';
+import Dashboard from './components/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -19,8 +19,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "starships",
-        element: <Home />,
+        path: "starships/",
+        element: <Dashboard />,
+      },
+      {
+        path: "pilots/",
+        element: <Dashboard />,
       },
       {
         path: "starship/:starshipId",

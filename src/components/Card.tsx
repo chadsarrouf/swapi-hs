@@ -8,8 +8,13 @@ type Props = {
 
 const Card = ({ header, resource, resourceId }: Props) => {
   const imageUrl = `/${resource}/${resourceId}.jpg`;
-  
-  console.log(imageUrl, 'imageUrl');
+    // Regular expression to match the last occurrence of 's'
+  const regex = /s(?!.*s)/;
+  // Remove the last 's' from the string
+  const resourceSingular = resource.replace(regex, '');
+  // I.e. starship/4
+  const resourceUrl = `${resourceSingular}/${resourceId}`;
+  console.log(resourceUrl, 'resourceUrl');
   const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.currentTarget.parentElement?.classList.add("hovering-card");
   };
@@ -21,10 +26,10 @@ const Card = ({ header, resource, resourceId }: Props) => {
   return (
     <Link
       className="card" 
-      to={`${resource}/${resourceId}`}
+      to={resourceUrl}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      >
+    >
       <div className="card-background"
         style={{
           backgroundImage: `url(${imageUrl})`
