@@ -50,333 +50,333 @@ $sw-yellow: #FFE81F;
   }
 
 
-  .header {
-    height: 50px;
-    margin-top: 2rem;
-    margin-bottom: 6rem;
-    position: relative;
+.header {
+  height: 50px;
+  margin-top: 2rem;
+  margin-bottom: 6rem;
+  position: relative;
+  
+  img {
+    height: 100%;
+    width: auto;
+    margin: auto;
+    cursor: pointer;
+  }
+  
+  .buttons {
+    position: absolute;
+    top: 6px;
+    right: 16rem;
+    display: flex;
+    width: 8rem;
+    justify-content: space-evenly;
+    filter:brightness(1.2);
     
-    img {
-      height: 100%;
-      width: auto;
-      margin: auto;
+    .refresh {
       cursor: pointer;
+      height: 2.4rem;
+      
+    }
+    .mute {
+      cursor: pointer;
+      height: 2.1rem;      
+    }
+  
+    .mute:hover, .refresh:hover {
+      filter: brightness(0.55) saturate(1.2) contrast(0.85) blur(0.2px);
     }
     
-    .buttons {
-      position: absolute;
-      top: 6px;
-      right: 16rem;
-      display: flex;
-      width: 8rem;
-      justify-content: space-evenly;
-      filter:brightness(1.2);
-      
-      .refresh {
-        cursor: pointer;
-        height: 2.4rem;
-        
-      }
-      .mute {
-        cursor: pointer;
-        height: 2.1rem;      
-      }
-    
-      .mute:hover, .refresh:hover {
-        filter: brightness(0.55) saturate(1.2) contrast(0.85) blur(0.2px);
-      }
-      
-    }
-
   }
 
-  .content {
-    width: 60%;
-    margin: 0 auto;
-    position: relative;
+}
 
-  }
-    
-  .dashboard {  
+.content {
+  width: 60%;
+  margin: 0 auto;
+  position: relative;
 
-    .tab-container {
+}
+  
+.dashboard {  
 
-      h1 {
-        cursor: pointer;
-        color: $sw-yellow;
-        font-size: 3rem;
-        font-family: 'SF Distant Galaxy', sans-serif;
-        margin: 0 20px;
-      }
-      
-      h1:not(.active) {
-        color: gray;
-      }
+  .tab-container {
 
-      h1:hover {
-        color: $sw-yellow;
-        filter: brightness(0.55) saturate(1.2) contrast(0.85) blur(0.2px);
-      }
-
-      h1.active {
-        color: $sw-yellow !important;
-      }
-    }
-
-    .card-container {
-
-      padding-top: 3rem;
-
-      .card{
-        list-style: none;
-        height: 220px;    
-        position: relative;
-      }
-
-      .card:before{
-        content: '';
-        display: block;
-        padding-bottom: 150%;
-        width: 100%;
-      }
-
-      .card-background{
-        
-        background-size: cover;
-        background-position: center;
-        border-radius: 20px;
-        bottom: 0;
-        filter: brightness(0.45) saturate(1.2) contrast(0.85) blur(0.2px);
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        transform-origin: center;
-        transform: scale(1) translateZ(0);
-        transition: 
-          filter 200ms linear,
-          transform 200ms linear,
-          border 200ms linear;
-      }
-
-      .card-content{
-        color: white;      
-        left: 0;
-        padding: 1rem;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        transition: 200ms;
-
-          .card-heading{
-            font-size: 1rem;
-            font-weight: 400;
-            text-shadow: 100px 19px 40px rgba(0,0,0,0.2);
-            line-height: 1.4;
-            text-align: center;
-            transform: scale(1) translateZ(0);
-            transition: 
-              transform 200ms linear,
-              opacity 200ms linear;
-          }
-
-          .see-details {
-            font-size: smaller;
-            bottom: 0;
-            right: 1rem;
-            opacity: 0;
-            position: absolute;
-          }
-        
-
-      }
-
-
-
-
-    }
-
-    // blur out non-hovered cards
-    .hovering-card > .card:not(:hover) .card-background,
-    .hovering-card > .card:not(:hover) .card-content
-    {
-      filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
-    }
-
-    // increase res/brightness of hovered card
-    .card:hover .card-background{
-      transform: scale(1.1) translateZ(0);
-      filter: brightness(0.8) saturate(1) contrast(1) blur(0);
-      border: $sw-yellow 4px solid;    
-    }
-
-    // fade in and out text
-    .card:hover .card-heading {
-      transform: translateY(-50%);
-    }
-
-    .card:hover .see-details {
-      animation: fade-in 1s forwards;
-    }
-
-      
-    @keyframes fade-in {
-      0% {
-        opacity: 0;
-      }
-      15% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 100;
-      }
-    }
-  }
-
-  .pagination {
-    margin: 4rem 0;
-    font-weight: 600;
-    opacity: 1;
-    color: $sw-yellow;
-    animation: fade-in 1s forwards;
-    transition: opacity 10000ms linear;    
-
-    .arrow {
+    h1 {
+      cursor: pointer;
       color: $sw-yellow;
-      font-size:2rem;
-      font-weight: 900;
-      transition: transform 50ms linear,
+      font-size: 3rem;
+      font-family: 'SF Distant Galaxy', sans-serif;
+      margin: 0 20px;
+    }
+    
+    h1:not(.active) {
+      color: gray;
     }
 
-    .arrow:hover {
-      color: white;    
-      transform: scale(1.4) translateZ(0);    
+    h1:hover {
+      color: $sw-yellow;
+      filter: brightness(0.55) saturate(1.2) contrast(0.85) blur(0.2px);
     }
 
-    p, .arrow {
-      cursor: pointer;
-      display: inline-block;
-      margin: 1rem;
-      width: 2rem;
-      transition: transform 50ms linear,    
-    }
-
-    p:hover {
-      color: white;    
-      transform: scale(1.2) translateZ(0); 
-    }
-
-    p.active {
-      border-bottom: 2px solid $sw-yellow;
-      color: white;
-      font-weight: 800;
+    h1.active {
+      color: $sw-yellow !important;
     }
   }
 
-  .pagination.empty  {
-    opacity: 0;
+  .card-container {
+
+    padding-top: 3rem;
+
+    .card{
+      list-style: none;
+      height: 220px;    
+      position: relative;
+    }
+
+    .card:before{
+      content: '';
+      display: block;
+      padding-bottom: 150%;
+      width: 100%;
+    }
+
+    .card-background{
+      
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+      bottom: 0;
+      filter: brightness(0.45) saturate(1.2) contrast(0.85) blur(0.2px);
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transform-origin: center;
+      transform: scale(1) translateZ(0);
+      transition: 
+        filter 200ms linear,
+        transform 200ms linear,
+        border 200ms linear;
+    }
+
+    .card-content{
+      color: white;      
+      left: 0;
+      padding: 1rem;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      transition: 200ms;
+
+        .card-heading{
+          font-size: 1rem;
+          font-weight: 400;
+          text-shadow: 100px 19px 40px rgba(0,0,0,0.2);
+          line-height: 1.4;
+          text-align: center;
+          transform: scale(1) translateZ(0);
+          transition: 
+            transform 200ms linear,
+            opacity 200ms linear;
+        }
+
+        .see-details {
+          font-size: smaller;
+          bottom: 0;
+          right: 1rem;
+          opacity: 0;
+          position: absolute;
+        }
+      
+
+    }
+
+
+
+
   }
 
+  // blur out non-hovered cards
+  .hovering-card > .card:not(:hover) .card-background,
+  .hovering-card > .card:not(:hover) .card-content
+  {
+    filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
+  }
+
+  // increase res/brightness of hovered card
+  .card:hover .card-background{
+    transform: scale(1.1) translateZ(0);
+    filter: brightness(0.8) saturate(1) contrast(1) blur(0);
+    border: $sw-yellow 4px solid;    
+  }
+
+  // fade in and out text
+  .card:hover .card-heading {
+    transform: translateY(-50%);
+  }
+
+  .card:hover .see-details {
+    animation: fade-in 1s forwards;
+  }
+
+    
   @keyframes fade-in {
     0% {
       opacity: 0;
     }
-    90% {
+    15% {
       opacity: 0;
     }
     100% {
-      opacity: 1;
+      opacity: 100;
     }
   }
+}
 
+.pagination {
+  margin: 4rem 0;
+  font-weight: 600;
+  opacity: 1;
+  color: $sw-yellow;
+  animation: fade-in 1s forwards;
+  transition: opacity 10000ms linear;    
 
-  .starship, .pilot {
-    position: relative;
+  .arrow {
+    color: $sw-yellow;
+    font-size:2rem;
+    font-weight: 900;
+    transition: transform 50ms linear,
+  }
+
+  .arrow:hover {
+    color: white;    
+    transform: scale(1.4) translateZ(0);    
+  }
+
+  p, .arrow {
+    cursor: pointer;
+    display: inline-block;
+    margin: 1rem;
+    width: 2rem;
+    transition: transform 50ms linear,    
+  }
+
+  p:hover {
+    color: white;    
+    transform: scale(1.2) translateZ(0); 
+  }
+
+  p.active {
+    border-bottom: 2px solid $sw-yellow;
     color: white;
-    padding: 4rem 6rem; 
+    font-weight: 800;
+  }
+}
 
-    .back {
-      cursor: pointer;
+.pagination.empty  {
+  opacity: 0;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.starship, .pilot {
+  position: relative;
+  color: white;
+  padding: 4rem 6rem; 
+
+  .back {
+    cursor: pointer;
+    position: absolute;
+    top:  -10px;
+    left: -100px;
+    width: 60px;
+    transition: 
+      transform 50ms linear,
+  }
+
+  .back:hover {
+    transform: scale(1.1) translateZ(0);
+    filter: brightness(0.85) saturate(1.2) contrast(0.85) blur(0.2px);
+  }
+
+  .details {
+    position: relative;
+    width: 100%;
+    text-align: left;
+    line-height: 2.5rem;
+    .image {
+      border: 2px solid white;
+      border-radius: 20px 0 20px 20px;
+      width: 45%;
       position: absolute;
-      top:  -10px;
-      left: -100px;
-      width: 60px;
-      transition: 
-        transform 50ms linear,
+      top: 0;
+      right: -10rem;
     }
+    .info {
+      border-top: 3px solid white;
+      border-left: 1px solid $sw-yellow;
+      border-radius: 10px 0px 0 0;
+      padding: 2rem;
+      width: 70%;
 
-    .back:hover {
-      transform: scale(1.1) translateZ(0);
-      filter: brightness(0.85) saturate(1.2) contrast(0.85) blur(0.2px);
-    }
-
-    .details {
-      position: relative;
-      width: 100%;
-      text-align: left;
-      line-height: 2.5rem;
-      .image {
-        border: 2px solid white;
-        border-radius: 20px 0 20px 20px;
-        width: 45%;
-        position: absolute;
-        top: 0;
-        right: -10rem;
+      > div {
+        flex-basis: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        border-bottom: 1px solid gray;
       }
-      .info {
-        border-top: 3px solid white;
-        border-left: 1px solid $sw-yellow;
-        border-radius: 10px 0px 0 0;
-        padding: 2rem;
-        width: 70%;
 
-        > div {
-          flex-basis: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          border-bottom: 1px solid gray;
-        }
+      span {
+        display: flex;
+        flex-basis: 50%;
+        justify-content: start;  
 
-        span {
-          display: flex;
-          flex-basis: 50%;
-          justify-content: start;  
-
-          label {
-            font-weight: 800;
-            margin-right: 2rem;
-            text-align: left;          
-          }   
-        }
-
-        p {
-          flex-basis: 50%;
-        }
-
-        li {
-          color: turquoise;
-          line-height: 1.5rem;
-          font-weight: 600;
-          cursor: pointer;
-          list-style-type: circle;
-        }
-
-
-        li:hover{
-          text-decoration: underline;
-        }
-
+        label {
+          font-weight: 800;
+          margin-right: 2rem;
+          text-align: left;          
+        }   
       }
-    }
-    
-    .error {
-      width: 100%;
-      font-weight: 100;
-      padding: 1rem;
-      border-bottom: 1px solid gray;
-      text-align: center;
+
+      p {
+        flex-basis: 50%;
+      }
+
+      li {
+        color: turquoise;
+        line-height: 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        list-style-type: circle;
+      }
+
+
+      li:hover{
+        text-decoration: underline;
+      }
+
     }
   }
+  
+  .error {
+    width: 100%;
+    font-weight: 100;
+    padding: 1rem;
+    border-bottom: 1px solid gray;
+    text-align: center;
+  }
+}
 
 }
 
@@ -396,6 +396,10 @@ $sw-yellow: #FFE81F;
 $shadows-small: multiple-box-shadow(700);
 $shadows-medium: multiple-box-shadow(200);
 $shadows-big: multiple-box-shadow(100);
+
+html {
+  overflow: hidden;
+}
 
 #stars {
   width: 1px;
