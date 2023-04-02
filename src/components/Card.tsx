@@ -14,7 +14,6 @@ const Card = ({ header, resource, resourceId }: Props) => {
   const resourceSingular = resource.replace(regex, '');
   // I.e. starship/4
   const resourceUrl = `${resourceSingular}/${resourceId}`;
-  console.log(resourceUrl, 'resourceUrl');
   const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.currentTarget.parentElement?.classList.add("hovering-card");
   };

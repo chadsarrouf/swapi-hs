@@ -12,15 +12,25 @@ $sw-yellow: #FFE81F;
     .loader {
       animation: App-logo-spin infinite 1.5s linear;
 
-    @keyframes App-logo-spin {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
+      @keyframes App-logo-spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
       }
     }
-    }
+  }
+
+  .noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
   }
 
   .loader {
@@ -48,6 +58,7 @@ $sw-yellow: #FFE81F;
     height: 100%;
     width: auto;
     margin: auto;
+    cursor: pointer;
   }
   
 }
@@ -167,7 +178,7 @@ $sw-yellow: #FFE81F;
 
   // increase res/brightness of hovered card
   .card:hover .card-background{
-    transform: scale(1.05) translateZ(0);
+    transform: scale(1.1) translateZ(0);
     filter: brightness(0.6) saturate(1) contrast(1) blur(0);
     border: $sw-yellow 4px solid;    
   }
@@ -195,10 +206,67 @@ $sw-yellow: #FFE81F;
   }
 }
 
+.pagination {
+  margin: 4rem 0;
+  font-weight: 600;
+  opacity: 1;
+  color: $sw-yellow;
+  animation: fade-in 1s forwards;
+  transition: opacity 10000ms linear;    
+
+  .arrow {
+    color: $sw-yellow;
+    font-size:2rem;
+    font-weight: 900;
+    transition: transform 50ms linear,
+  }
+
+  .arrow:hover {
+    color: white;    
+    transform: scale(1.4) translateZ(0);    
+  }
+
+  p, .arrow {
+    cursor: pointer;
+    display: inline-block;
+    margin: 1rem;
+    width: 2rem;
+    transition: transform 50ms linear,    
+  }
+
+  p:hover {
+    color: white;    
+    transform: scale(1.2) translateZ(0); 
+  }
+
+  p.active {
+    border-bottom: 2px solid $sw-yellow;
+    color: white;
+    font-weight: 800;
+  }
+}
+
+.pagination.empty  {
+  opacity: 0;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 .starship, .pilot {
   position: relative;
   color: white;
-  padding: 6rem; 
+  padding: 4rem 6rem; 
 
   .back {
     cursor: pointer;
@@ -254,10 +322,21 @@ $sw-yellow: #FFE81F;
         }   
       }
 
-
-
       p {
         flex-basis: 50%;
+      }
+
+      li {
+        color: turquoise;
+        line-height: 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        list-style-type: circle;
+      }
+
+
+      li:hover{
+        text-decoration: underline;
       }
 
     }

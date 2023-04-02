@@ -10,6 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Starship from './components/Starship';
+import Pilot from './components/Pilot';
 import Dashboard from './components/Dashboard';
 
 const router = createBrowserRouter([

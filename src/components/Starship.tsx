@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link} from "react-router-dom";
 import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
 import { useFetchResource } from '../hooks/SwapiApi';
@@ -64,6 +64,33 @@ const Starship = () => {
             </div>
             <div>
               <span><label>StarshipClass </label></span> <p> {starship.starship_class} </p>
+            </div>
+            <div> 
+              <span><label>Pilots </label></span> 
+              <p>
+                { starship.pilots &&
+                  starship.pilots.map((pilot, index)=>{
+                    const regex = /\d+(?=\/$)/; // match one or more digits at the end of the string
+                    const match =  pilot.match(regex); // returns an array containing the match or null
+                    const id = match?.[0]?.toString();
+
+                    return (
+                      <li key={index}>
+                        <Link
+                          className="card" 
+                          to={`/pilot/${id}`}
+                        >
+                        {`Pilot/${id} →`}
+                        </Link>
+                      </li>
+                    );
+
+                    })
+                }        
+                { !starship.pilots.length &&
+                  "n/a"
+                }             
+              </p>
             </div>
           </div>
         </div>   
