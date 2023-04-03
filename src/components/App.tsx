@@ -3,19 +3,19 @@ import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
 import Dashboard from './Dashboard';
 import Header from './Header';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Starship from './Starship';
 import Pilot from './Pilot';
 import { useFetchAllData } from '../hooks/SwapiApi';
 
 const App = () => {
   const audioRef = useRef(null);
-
   <audio ref={audioRef} src="/starwars.mp3" loop autoPlay />        
 
   const { starships, pilots, loading, } = useFetchAllData();
   const {setPilots, setStarships, setLoading} = useContext(DataContext);
 
+  const location = useLocation();
 
   useEffect(() => {
     setStarships(starships);
@@ -26,7 +26,7 @@ const App = () => {
   return (  
     <div className="App">   
       <div>
-        <p className={'crawl'}>
+        <p className={`${location.pathname === '/' && !location.search ? 'crawl' : ''} crawlText`}>
           by Chad Sarrouf
         </p>
       </div>

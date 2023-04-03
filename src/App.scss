@@ -45,11 +45,12 @@ $sw-yellow: #FFE81F;
     }
   }
 
-  .crawl {
-    z-index: 999;
+  .crawlText {
     color: white;
     padding-top: 1rem;
-    overflow: hidden;
+  }
+  .crawl {
+    z-index: 999;
     perspective: 400px;
     /* Position the element so we can adjust the top property in the animation */
     position: relative;
