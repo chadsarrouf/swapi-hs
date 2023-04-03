@@ -86,7 +86,12 @@ $sw-yellow: #FFE81F;
       filter: brightness(0.55) saturate(1.2) contrast(0.85) blur(0.2px);
     }
     
+    @media screen and (max-width: 1284px) {
+      display: none;
+    }
   }
+
+
 
 }
 
