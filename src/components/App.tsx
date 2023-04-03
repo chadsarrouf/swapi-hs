@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import '../App.scss';
 import { DataContext } from '../contexts/DataContext';
 import Dashboard from './Dashboard';
@@ -14,7 +14,7 @@ const App = () => {
 
   const { starships, pilots, loading, } = useFetchAllData();
   const {setPilots, setStarships, setLoading} = useContext(DataContext);
-
+  const [hasAnimationRun, setHasAnimationRun] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -26,7 +26,10 @@ const App = () => {
   return (  
     <div className="App">   
       <div>
-        <p className={`${location.pathname === '/' && !location.search ? 'crawl' : ''} crawlText`}>
+        <p  
+          onAnimationEnd={() => setHasAnimationRun(true)}
+          className={`${location.pathname === '/' && !location.search && !hasAnimationRun ? 'crawl' : ''} crawlText`}
+        >
           by Chad Sarrouf
         </p>
       </div>
