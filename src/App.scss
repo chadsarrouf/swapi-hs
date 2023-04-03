@@ -25,6 +25,40 @@ $sw-yellow: #FFE81F;
     }
   }
 
+  // FIRST LOAD ANIMATION //
+  //////////////////////////
+
+  @keyframes crawl {
+    0% {
+      /* The element starts below the screen */
+      font-size: 600%;
+      bottom: -1000px;
+      /* Rotate the text 20 degrees but keep it close to the viewer */
+      transform: rotateX(20deg) translateZ(0);
+    }
+    100% { 
+      font-size: 100%;
+      /* This is a magic number, but using a big one to make sure the text is fully off the screen at the end */
+      bottom: -630px;
+      /* Slightly increasing the rotation at the end and moving the text far away from the viewer */
+      transform: rotateX(25deg) translateZ(1500px);
+    }
+  }
+
+  .crawl {
+    z-index: 999;
+    color: white;
+    padding-top: 1rem;
+    overflow: hidden;
+    perspective: 400px;
+    /* Position the element so we can adjust the top property in the animation */
+    position: relative;
+    /* Defines the skew origin at the very center when we apply transforms on the animation */
+    transform-origin: 5% 10%;
+    /* Adds the crawl animation, which plays for one minute */
+    animation: crawl 3s linear;
+  }
+
   .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
@@ -35,13 +69,17 @@ $sw-yellow: #FFE81F;
                                     supported by Chrome, Edge, Opera and Firefox */
   }
 
+  
+
   .loader {
     width: 50px;
     height: 50px;
     pointer-events: none;
     position: fixed;
-    top: 46%;
-    left: 50%;
+    // top: 46%;
+    // left: 50%;
+    top: 4%; 
+    left: 2%;
     display: none;
   }
 

@@ -24,7 +24,12 @@ const App = () => {
   }, [starships, setStarships, pilots, setPilots, loading, setLoading]);
 
   return (  
-    <div className="App">    
+    <div className="App">   
+      <div>
+        <p className={'crawl'}>
+          by Chad Sarrouf
+        </p>
+      </div>
       <Header/>
         <section className="content">
           <Routes>
