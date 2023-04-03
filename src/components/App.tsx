@@ -28,7 +28,7 @@ const App = () => {
       <div>
         <p  
           onAnimationEnd={() => setHasAnimationRun(true)}
-          className={`${location.pathname === '/' && !location.search && !hasAnimationRun ? 'crawl' : ''} crawlText`}
+          className={`${location.pathname === '/' && !hasAnimationRun ? 'crawl' : ''} crawlText`}
         >
           by Chad Sarrouf
         </p>
