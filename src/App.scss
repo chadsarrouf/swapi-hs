@@ -275,7 +275,23 @@ $sw-yellow: #FFE81F;
       opacity: 100;
     }
   }
+  
+  .loaded {
+    opacity: 0;  
+    animation: fade-in-gradual 1.3s forwards;
+  }
+
+  @keyframes fade-in-gradual {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 100;
+    }
+  }
 }
+
+
 
 .pagination {
   margin: 4rem 0;

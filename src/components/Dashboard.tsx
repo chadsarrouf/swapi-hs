@@ -50,7 +50,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
+    <div className="dashboard" >
       <Loader loading={loading} />
     
       <div className="tab-container flex flex-row justify-evenly flex-wrap">
@@ -70,10 +70,10 @@ const Dashboard = () => {
         </h1> 
       </div>
       { !loading && 
-        <>
+        <div  className={pilots.length ? 'loaded' : ''}>
           <CardContainer resource={activeResource} cardData={cardData} />
           <Pagination count={activeResource === 'starships' ? starships.length : pilots.length} page={page} setPage={setPage} />
-        </>
+        </div>
       }
     </div>
   );
