@@ -92,7 +92,7 @@ const Starship = ({starshipsInMemory} : Props) => {
             <div> 
               <span><label>Pilots </label></span> 
               <p>
-                { (starship.pilots && pilots.length) ?
+                { (starship.pilots.length && pilots.length) ?
                   starship.pilots.map((pilotUrl, index)=>{
                     const regex = /\d+(?=\/$)/; // match one or more digits at the end of the string (the id)
                     const match =  pilotUrl.match(regex); // returns an array containing the match or null
